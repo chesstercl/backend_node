@@ -1,24 +1,23 @@
 const express = require('express');
 const route = express.Router();
 
-route.get('/', (req, res) => {
-    res.status(200).json({ status:200, mensaje: 'Se proceso correctamente' });
-});
+const { 
+    getLibro, 
+    getLibros, 
+    postLibro, 
+    putLibro, 
+    deleteLibro,
+ } = require('../controllers/libro');
 
-route.get('/:id', (req, res) => {
-    res.status(200).json({ status:200, mensaje: 'Se devuelve el libro por id' });
-});
+route
+    .route('/')
+    .get(getLibros)
+    .post(postLibro)
 
-route.post('/', (req, res) => {
-    res.status(200).json({ status:200, mensaje: 'Se ha creado eñ libro correctamente' });
-});
-
-route.put('/:id', (req, res) => {
-    res.status(200).json({ status:200, mensaje: 'Se actualizo el libro' });
-});
-
-route.delete('/:id', (req, res) => {
-    res.status(200).json({ status:200, mensaje: 'Se elimino el libro' });
-});
+route
+    .route('/:id')
+    .get(getLibro)
+    .put(putLibro)
+    .delete(deleteLibro)
 
 module.exports = route;
