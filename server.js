@@ -17,7 +17,7 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 app.use('/api/Libro', libro);
-app.use('api/Autor', autor);
+app.use('/api/Autor', autor);
 
 const PORT = process.env.PORT || 5000
 
