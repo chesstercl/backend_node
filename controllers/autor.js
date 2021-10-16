@@ -2,10 +2,14 @@ const Autor = require('../models/Autor')
 
 exports.postAutor = async (req, res, next) => {
 
-    const autorData = await Autor.create(req.body);
+    try{
+        const autorData = await Autor.create(req.body);
+        res.status(200).json({
+            status : 200,
+            data: autorData
+        });
+    }catch(err){
+        res.status(400).json({status:400, mensaje: err})
+    }
+};
 
-    res.status(200).json({
-        status : 200,
-        data: autorData
-    })
-}
