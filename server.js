@@ -7,14 +7,17 @@ dotenv.config({path: './config/config.env'});
 connectDatabase();
 
 const libro = require('./routes/libro');
+const autor = require('./routes/autor');
 
 const app = express();
+app.use(express.json());
 
 if(process.env.NODE_ENV === 'development'){
     app.use(morgan('dev'));
 }
 
 app.use('/api/Libro', libro);
+app.use('api/Autor', autor);
 
 const PORT = process.env.PORT || 5000
 
