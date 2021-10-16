@@ -18,4 +18,12 @@ app.use('/api/Libro', libro);
 
 const PORT = process.env.PORT || 5000
 
-app.listen(PORT, console.log('Servidor se ejecuto en ambiente', process.env.NODE_ENV));
+const server = app.listen(
+    PORT, 
+    console.log('Servidor se ejecuto en ambiente', process.env.NODE_ENV)
+);
+
+process.on('unhandledRejection', (err, promise) => {
+    console.log('Errores', err.message);
+    server.close(() => process.exit(1));
+});
