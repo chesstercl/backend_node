@@ -1,3 +1,4 @@
+const ErrorResponse = require("../helper/errorResponse")
 const Autor = require('../models/Autor')
 
 exports.postAutor = async (req, res, next) => {
@@ -27,9 +28,14 @@ exports.getAutor = async (req, res, next) => {
 
     try{
         const autor = await Autor.findById(req.params.id);
+
+        if(!autor){
+            return next(new ErrorResponse("El autor no existe en la bd con este id " + req.params.id, 404));
+        }
+
         res.status(200).json(autor);
     }catch(err){
-        next(err);
+        next(new ErrorResponse("El autor no existe con este id " + req.params.id, 404));
     }
 };
 
