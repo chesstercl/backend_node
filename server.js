@@ -1,14 +1,14 @@
 const dotenv = require('dotenv');
 const express = require('express');
 const morgan = require('morgan')
+const connectDatabase = require('./config/db');
+
+dotenv.config({path: './config/config.env'});
+connectDatabase();
 
 const libro = require('./routes/libro');
 
-dotenv.config({path: './config/config.env'});
-
 const app = express();
-
-
 
 if(process.env.NODE_ENV === 'development'){
     app.use(morgan('dev'));
