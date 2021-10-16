@@ -2,7 +2,7 @@ const {Router} = require("express");
 const express = require("express");
 const route = express.Router();
 
-const { postAutor, getAutor, getAutores } = require('../controllers/autor');
+const { postAutor, getAutor, getAutores, updateAutor, deleteAutor } = require('../controllers/autor');
 
 route.route("/")
         .post(postAutor)
@@ -10,5 +10,7 @@ route.route("/")
 
 route.route("/:id")
         .get(getAutor)
+        .put(updateAutor)
+        .delete(deleteAutor)
 
 module.exports =  route;

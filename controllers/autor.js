@@ -33,4 +33,36 @@ exports.getAutor = async (req, res, next) => {
     }
 };
 
+exports.updateAutor = async (req, res, next) => {
+
+    try{
+        const autor = await Autor.findByIdAndUpdate(req.params.id, req.body);
+
+        if(!autor){
+            return res.status(400).json({status:400})
+        }
+
+        res.status(200).json({status:200, data: autor});
+
+    }catch(err){
+        res.status(400).json({status:400, mensaje: err})
+    }
+};
+
+exports.deleteAutor = async (req, res, next) => {
+
+    try{
+        const autor = await Autor.findByIdAndDelete(req.params.id);
+
+        if(!autor){
+            return res.status(400).json({status:400})
+        }
+
+        res.status(200).json({status:200});
+
+    }catch(err){
+        res.status(400).json({status:400, mensaje: err})
+    }
+};
+
 
