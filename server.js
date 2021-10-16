@@ -1,5 +1,6 @@
 const dotenv = require('dotenv');
 const express = require('express');
+const morgan = require('morgan')
 
 const libro = require('./routes/libro');
 
@@ -7,12 +8,11 @@ dotenv.config({path: './config/config.env'});
 
 const app = express();
 
-const loger = (req, res, next) => {
-    console.log('Este request esta pasando por el middleware');
-    next();
-}
 
-app.use(loger);
+
+if(process.env.NODE_ENV === 'development'){
+    app.use(morgan('dev'));
+}
 
 app.use('/api/Libro', libro);
 
