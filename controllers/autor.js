@@ -10,7 +10,7 @@ exports.postAutor = async (req, res, next) => {
             data: autorData
         });
     }catch(err){
-        res.status(400).json({status:400, mensaje: err})
+        next(new ErrorResponse("Error, no es posible crear el autor " + err.message, 404));
     }
 };
 
@@ -20,7 +20,7 @@ exports.getAutores = async (req, res, next) => {
         const autores = await Autor.find();
         res.status(200).json(autores);
     }catch(err){
-        res.status(400).json({status:400, mensaje: err})
+        next(new ErrorResponse("Error, no es posible obtener los autores" + req.params.id, 404));
     }
 };
 
@@ -45,13 +45,13 @@ exports.updateAutor = async (req, res, next) => {
         const autor = await Autor.findByIdAndUpdate(req.params.id, req.body);
 
         if(!autor){
-            return res.status(400).json({status:400})
+            return next(new ErrorResponse("El autor no existe en la bd con este id " + req.params.id, 404));
         }
 
         res.status(200).json({status:200, data: autor});
 
     }catch(err){
-        res.status(400).json({status:400, mensaje: err})
+        next(new ErrorResponse("El autor no existe con este id " + req.params.id, 404));
     }
 };
 
@@ -61,13 +61,13 @@ exports.deleteAutor = async (req, res, next) => {
         const autor = await Autor.findByIdAndDelete(req.params.id);
 
         if(!autor){
-            return res.status(400).json({status:400})
+            return next(new ErrorResponse("El autor no existe en la bd con este id " + req.params.id, 404));
         }
 
         res.status(200).json({status:200});
 
     }catch(err){
-        res.status(400).json({status:400, mensaje: err})
+        next(new ErrorResponse("El autor no existe con este id " + req.params.id, 404));
     }
 };
 
