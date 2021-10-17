@@ -10,6 +10,7 @@ connectDatabase();
 
 const libro = require('./routes/libro');
 const autor = require('./routes/autor');
+const usuario = require('./routes/usuario');
 
 const app = express();
 app.use(express.json());
@@ -21,6 +22,7 @@ if(process.env.NODE_ENV === 'development'){
 
 app.use('/api/Libro', libro);
 app.use('/api/Autor', autor);
+app.use('/usuario', usuario);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000
