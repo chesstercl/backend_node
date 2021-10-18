@@ -1,16 +1,17 @@
 const {Router} = require("express");
 const express = require("express");
 const route = express.Router();
+const {security} = require('../middleware/security');
 
 const { postAutor, getAutor, getAutores, updateAutor, deleteAutor } = require('../controllers/autor');
 
 route.route("/")
-        .post(postAutor)
-        .get(getAutores)
+        .post(security, postAutor)
+        .get(security, getAutores)
 
 route.route("/:id")
-        .get(getAutor)
-        .put(updateAutor)
-        .delete(deleteAutor)
+        .get(security, getAutor)
+        .put(security, updateAutor)
+        .delete(security, deleteAutor)
 
 module.exports =  route;

@@ -1,5 +1,7 @@
+const {Router} = require("express");
 const express = require('express');
 const route = express.Router();
+const {security} = require('../middleware/security');
 
 const { 
     getLibro, 
@@ -12,17 +14,17 @@ const {
 
 route
     .route('/')
-    .get(getLibros)
-    .post(postLibro)
+    .get(security, getLibros)
+    .post(security, postLibro)
 
 route
     .route('/:id')
-    .get(getLibro)
-    .put(putLibro)
-    .delete(deleteLibro)
+    .get(security, getLibro)
+    .put(security, putLibro)
+    .delete(security, deleteLibro)
 
 route
     .route('/pagination')
-    .post(pagination)
+    .post(security, pagination)
 
 module.exports = route;

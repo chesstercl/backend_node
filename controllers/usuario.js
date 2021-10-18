@@ -66,6 +66,22 @@ exports.login = async (req, res, next) => {
   }
 };
 
-exports.getUsuario = (req, res, next) => {
-  res.status(200).json({ status: 200 });
+exports.getUsuario = async (req, res, next) => {
+  try {
+    const userWithToken = req.usuario;
+    const token = await userWithToken.crearJsonWebToken();
+    res.status(200).json({
+      status: 200,
+      id: userWithToken._id,
+      nombre: userWithToken.nombre,
+      apellido: userWithToken.apellido,
+      username: userWithToken.username,
+      email: userWithToken.email,
+      token,
+    });
+  } catch (err) {
+    return next(
+      new ErrorResponse("Error obteniendo la sesion del usuario " + err, 400)
+    );
+  }
 };
