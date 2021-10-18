@@ -40,4 +40,8 @@ UsuarioSchema.methods.crearJsonWebToken = function () {
   });
 };
 
+UsuarioSchema.methods.validarPassword = async function (passwordUsuario) {
+  return await bcrypt.compare(passwordUsuario, this.password);
+};
+
 module.exports = mongoose.model("Usuario", UsuarioSchema);
