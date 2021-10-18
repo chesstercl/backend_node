@@ -4,14 +4,25 @@ const ErrorResponse = require("../helper/errorResponse");
 exports.registrarUsuario = async (req, res, next) => {
   try {
     const { nombre, apellido, username, email, password } = req.body;
-    await Usuario.create({
+    const usuarioBD = await Usuario.create({
       nombre,
       apellido,
       userName: username,
       email,
       password,
     });
-    res.status(200).json({status:200});
+
+    const token = usuarioBD.crearJsonWebToken();
+
+    res.status(200).json({
+        status:200,
+        id: usuarioBD._id,
+        nombre,
+        apellido,
+        username,
+        email,
+        token
+    });
   } catch (err) {
       next(
           new ErrorResponse("Error registrando usuario" + err, 400)
